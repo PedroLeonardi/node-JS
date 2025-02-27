@@ -54,6 +54,8 @@ const {method, url} = req; //cria uma constante que evita chamar separado  ${req
         });
     };
 
+    // teste commit
+
     // const reqpost = http.request(options, function(res1) {
     //     console.log('STATUS: ' + res1.statusCode);
     //     console.log('HEADERS: ' + JSON.stringify(res1.headers));
