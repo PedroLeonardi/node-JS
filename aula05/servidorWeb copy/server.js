@@ -49,9 +49,12 @@ const {method, url} = req; //cria uma constante que evita chamar separado  ${req
 
         req.on ('end', ()=>{ //req.on receber a requsicao
             console.log('Dados recebidos: ', body);
-            res.writeHead(201, {'Content-type': 'text/plain'}); //text palin, é o metdodo de excibir a mensagem, ao invez d html
+            res.writeHead(201, {'Content-Type': 'text/plain'}); //text palin, é o metdodo de excibir a mensagem, ao invez d html
             res.end ('Dados de Contato recebidos com sucesso!!!')
         });
+    } else {
+        res.writeHead(404, {'Content-Type': 'text/plain'}); 
+        res.end ('<h1>Pagina não existe!!!</h1>')
     };
 
     // teste commit
@@ -63,7 +66,7 @@ const {method, url} = req; //cria uma constante que evita chamar separado  ${req
     //     res1.on('data', function (chunk) {
     //       console.log('BODY: ' + chunk);
     //     });
-    //   });
+    //   });'
       
     //   reqpost.on('error', function(e) {
     //     console.log('problem with request: ' + e.message);
