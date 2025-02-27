@@ -1,0 +1,26 @@
+{
+    "produtos": [
+    {
+        "nome": "carro",
+        "preco": "10.000",
+        "descricao": "um carro que faz vrum vrum",
+        "categoria": "Automovel"
+    },
+
+    {
+        "nome": "barco",
+        "preco": "100.000",
+        "descricao": "um barco melhor que o titanic",
+        "categoria": "nautico"
+    },
+
+    {
+        "nome": "bicicleta",
+        "preco": "500",
+        "descricao": "com um sininho trim trim",
+        "categoria": "moviementação"
+    }
+    
+
+    ]
+}

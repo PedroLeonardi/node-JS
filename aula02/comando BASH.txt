@@ -1,0 +1,2 @@
+touch NOMEDOARQUVIO = cria um arquivo com o nome inserido 
+npm init -y = criar um projeto mais rapido

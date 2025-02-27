@@ -1,0 +1,15 @@
+{
+  "nome": "pedro",
+  "idade": 19,
+  "cidade": "Sao Bernardo Campo",
+  "telefones": [
+    "11-0000-0000",
+    "11-1111-1111"
+  ],
+  "ativo": true,
+  "nulo": null,
+  "endereço": {
+    "rua": "Rua Principal, 123",
+    "cidade": "São Paulo"
+  }
+}

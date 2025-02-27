@@ -1,0 +1,12 @@
+dir - lista itens da pasta 
+ren (nome-antigo) (novo-nome) - renomeia o arquivo
+mkdir - criar um novo diretorio
+rmdir - remover um diretorio
+cd - se movimenta 
+
+- - - - - 
+
+npm init = criar um novo projeto
+npm init -y = criar um projeto mais rapido
+*prencher o campos a seguir
+node (nomeProjeto) - executa o projeto citado

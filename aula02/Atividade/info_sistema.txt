@@ -1,0 +1,2 @@
+Arquitetura: x64
+HostName: ESN123D1230210

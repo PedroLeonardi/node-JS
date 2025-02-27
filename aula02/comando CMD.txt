@@ -1,0 +1,2 @@
+type null > NOMEDOARQUIVO = cria um novo arquivo direto pelo cmd
+npm init -y = criar um projeto mais rapido

@@ -1,0 +1,4 @@
+curl -X POST -H "Content-Type: application/json" -d '{"id":4, "nome": "produto C", preco:40}, ' localhost:3000/contato
+
+curl -X POST -H "Content-Type: application/x-www-form-urlncoded" -d '{"nome":"Pedro", "email": "pedro@email.com","preco":}, ' localhost:3000/contato
+
