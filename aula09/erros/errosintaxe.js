@@ -1,4 +1,6 @@
-console.log('Ola, Mundo!!!'
+console.log('Ola, Mundo!!!')
+
+// console.log('Ola, Mundo!!!' ---ESTE É O ERRO DE CODIGO----
 
 // C:\Users\24250386\Documents\24250386-Pedro-Doc\nodeJS\aula09\erros\errosintaxe.js:1 -----LOCAL DO ARQUIVO COM RPOBLEMA (:) E A LINHA-----
 // 
