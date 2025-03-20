@@ -26,6 +26,7 @@ async function exibirDetalhesProduto(id) {
 }
 
 async function exibirMenu() {
+    console.log('\n\n')
     const perguntas = [
         {
             type: 'list',
@@ -47,7 +48,16 @@ async function exibirMenu() {
         switch (resposta.opcao) {
             case 'listar':
                 const produtos = await listarProdutos();
-                console.log(produtos)
+
+                if(Array.isArray(produtos) && produtos.length > 0) {
+                    console.log(chalk.green('Lista de produtos: '));
+                    produtos.forEach(produto=>{
+                        console.log(`- ${chalk.cyan(produto.id)}: ${chalk.blueBright(produto.nome)} - R$ ${chalk.yellow(produto.preco)}`)
+                    })
+                } else {
+                    console.log(chalk.yellow('Nenhum produto encontrado.'))
+                }
+
                 exibirMenu();
 
                 break;
@@ -55,10 +65,14 @@ async function exibirMenu() {
 
                 const idResposta = await inquirer.prompt([
                     {type: 'input', name: 'id', message: chalk.blue('digite o id do produto: ')}
-                ])
-
+                ]);
                 const produto = await exibirDetalhesProduto(idResposta.id);
-                console.log(produto);
+                if(produto) {
+                    console.log(chalk.green('Informações do produtos'))
+                    console.log(`- ${chalk.cyan(produto.id)}: ${chalk.blueBright(produto.nome)} - R$ ${chalk.yellow(produto.preco)}`)
+                } else {
+                    console.log(chalk.red('Não existe um produto com esse id!!!'))
+                }
                 exibirMenu();
         };
 
