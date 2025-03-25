@@ -2,6 +2,7 @@ import express from 'express'
 import fs from 'fs'
 const router = express.Router();
 
+router.use(express.urlencoded({ extended: true }));
 
 let contatos = [];
 try {
@@ -22,6 +23,23 @@ router.get('/:id', (req,res)=>{
     const contato = contatos.find(p => p.id === id);
     res.send(contato)
 })
+
+router.post('/envio', (req,res)=>{
+    const novoItem = req.body
+    console.log("Produto enviado com Sucesso", JSON.stringify(novoItem));
+    res.send("Produto enviado com Sucesso")
+})
+
+router.options("/", (req,res)=>{
+    res.header('Allow', 'GET');
+    res.status(204).send();
+})
+
+router.options("/envio", (req,res)=>{
+    res.header('Allow', 'POST');
+    res.status(204).send();
+})
+
 
 
 
