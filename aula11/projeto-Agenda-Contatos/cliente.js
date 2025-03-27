@@ -25,14 +25,25 @@ async function detalhesProdutos (id){
     }
 }
 
-async function adicionarContato() {
+// async function adicionarContato() {
+//     try {
+//     const adicionaContato = await axios.get(`${URL_API}/contatos/envio`)
+//     return adicionaContato.data
+// } catch (error){
+//     console.error("Houve um erro ao tentar adionar o contato", error.message);
+//     return [];
+// }
+// }
+
+async function deletarContato(id) {
     try {
-    const adicionaContato = await axios.get(`${URL_API}/contatos/envio`)
-    return adicionaContato.data
-} catch (error){
-    console.error("Houve um erro ao tentar adionar o contato", error.message);
-    return [];
-}
+
+        const respostaDelete = await axios.delete(`${URL_API}/contatos/${id}`) // TEM QU SER DELETE EM FASE DE TESTE
+        return respostaDelete.data;
+    } catch (err) {
+        console.error (err)
+        return[];
+    }
 }
 
 async function exibirMenu() {
@@ -45,6 +56,7 @@ async function exibirMenu() {
                 {name: chalk.green('Listar Contatos'), value: "listar"},
                 {name: chalk.green('Detalhes Contato'), value: "detalhes"},
                 {name: chalk.green('Adicionar um novo Contato'), value: "adicionar"},
+                {name: chalk.green('Excluir um Contato'), value: "excluir"},
                 {name: chalk.green('Sair'), value: "sair"},
             ]
         }
@@ -71,7 +83,7 @@ try {
             const detalheProduto = await detalhesProdutos(idResposta.id);
             console.log(detalheProduto)
             break;
-        case 'adicionar':
+        case 'adicionar': //AQUI TEM QUE ARRUMAR !!!!!!!!!
 
             const novoContato = await inquirer.prompt([
                 { type: 'input', message: "insira o ID: ", name: 'id'},
@@ -92,7 +104,17 @@ try {
             .catch(error=>{
                 console.error('Ocorreu um erro', error)
             })
+            break;
+        case 'excluir':
+            const idResposta2 = await inquirer.prompt([
+                {type: 'input', name: 'id', message: 'Qual Produto vc deseja Excluir: '}
+            ])
 
+            const detalheProdutoa = await deletarContato(idResposta2.id);
+            console.log(detalheProdutoa)
+            break;
+            
+            
             
     }
 
