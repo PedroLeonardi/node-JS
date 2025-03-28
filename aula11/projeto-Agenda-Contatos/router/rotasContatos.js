@@ -33,28 +33,20 @@ function salvarDados(dados) {
 function deletarDados(id) {
 
     try{
-        let dataDelete = [];
+        let dataNonDelete = [];
         const AllData = fs.readFileSync('./data/contatos.json', 'utf8');
         const allDataJson = JSON.parse(AllData);
-        dataDelete = allDataJson.filter(p => p.id !== id)
-        fs.writeFileSync('./data/contatos.json', JSON.stringify(dataDelete, null, 2))
+        dataNonDelete = allDataJson.filter(p => p.id !== id)
+        fs.writeFileSync('./data/contatos.json', JSON.stringify(dataNonDelete, null, 2))
     } catch (err) {
         console.error(err)
     }
 }
 
 
-// let users = [{name: "Ben"},{name: "Tim"},{name: "Harry"}];
 
-// let usersWithoutTim = users.filter(user => user.name !== "Tim");
 
-// // The old fashioned way:
 
-// for (let [i, user] of users.entries()) {
-//   if (user.name === "Tim") {
-//     users.splice(i, 1); // Tim is now removed from "users"
-//   }
-// }
 
 
 
@@ -81,6 +73,10 @@ router.post('/envio', (req,res)=>{
         console.error("teste1", error.message)
     }
     res.send("Produto enviado com Sucesso")
+})
+
+router.patch('/:id', (req, res)=>{
+
 })
 
 router.delete('/:id', (req,res)=>{ /////TEM QUE SER DELETE SOMENTE TESTE
