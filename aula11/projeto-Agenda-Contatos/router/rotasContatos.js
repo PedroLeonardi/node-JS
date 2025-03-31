@@ -12,7 +12,7 @@ function exibirContatos() {
         dataContatos = JSON.parse(data);
         return dataContatos
     } catch (erro) {
-        console.error('Houve um erro ao ler o JSON de contatos', erro);
+        console.error('Houve um erro ao ler e exibir o JSON de contatos', erro);
         return dataContatos = []
     };
 }
@@ -26,7 +26,7 @@ function salvarDados(dados) {
         fs.writeFileSync('./data/contatos.json', JSON.stringify(dataJson, null, 2))
 
     } catch (error) {
-        console.error(error)
+        console.error('Houve um erro ao ler e salvar o JSON de contatos',error)
     }
 }
 
@@ -39,7 +39,7 @@ function deletarDados(id) {
         dataNonDelete = allDataJson.filter(p => p.id !== id)
         fs.writeFileSync('./data/contatos.json', JSON.stringify(dataNonDelete, null, 2))
     } catch (err) {
-        console.error(err)
+        console.error('Houve um erro ao ler e deletar o JSON de contatos', err)
     }
 }
 
@@ -60,9 +60,14 @@ router.get('/:id', (req,res)=>{
     const id = parseInt(req.params.id);
     const exibirContato = exibirContatos();
     const contato = exibirContato.find(p => p.id === id);
-    res.send(contato)
+    res.status(200).send(contato)
 
 })
+
+
+
+
+
 
 router.post('/envio', (req,res)=>{
     const novoItem = req.body
@@ -70,21 +75,28 @@ router.post('/envio', (req,res)=>{
     try {
         salvarDados(novoItem)
     } catch (error) {
-        console.error("teste1", error.message)
+        res.status(400).send("Houve um erro ao efetuar o salvamento", error.message) //OU É 400 OU 500
     }
-    res.send("Produto enviado com Sucesso")
+    res.status(200).send("Produto enviado com Sucesso")
 })
 
-router.patch('/:id', (req, res)=>{
+
+router.patch('/:id', (req, res)=>{ 
 
 })
+
+
 
 router.delete('/:id', (req,res)=>{ /////TEM QUE SER DELETE SOMENTE TESTE
     const id = parseInt(req.params.id)
-    deletarDados(id);
-    const item2 = JSON.stringify(exibirContatos()); // TESTE PARA RECEBIMENTO DO OBJETO 
 
-    res.status(200).send(`deletado com sucesso: ${item2}`)
+    try {
+        deletarDados(id);
+        const item2 = JSON.stringify(exibirContatos()); // TESTE PARA RECEBIMENTO DO OBJETO 
+        res.status(200).send(`deletado com sucesso: ${item2}`)
+    } catch (error) {
+        res.status(400).send("Houve um erro ao efetuar a exclusão", error.message)
+    }
 })
 
 router.options("/", (req,res)=>{
