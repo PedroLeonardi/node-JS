@@ -24,3 +24,4 @@ res.status(200).send('<h1>Página Incial</h1>');
 app.listen (port, ()=>{
     console.log(`Servidor rodando em http://localhost:${port}`);
 });
+// curl -i http://localhost:3000/admin/ -H 'authorization: Bearer SEGREDO' -H 'Content-Type: application/json;charset=UTF-8'

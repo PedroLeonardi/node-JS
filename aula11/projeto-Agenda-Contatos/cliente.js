@@ -74,14 +74,20 @@ async function atualizarContato(id, data) {
 async function entrarAdmin(password) {
 
     const token = {
-        header: {
-            'Content-Type': 'application/json;charset=UTF-8',
-            'authorization' : password
+        headers: {
+            // 'Content-Type': 'application/json;charset=UTF-8',
+            'authorization' :`Bearer ${password}`
+        }
+    }
+    const teste1 = JSON.stringify(token)
+    const body = {
+        body:{
+            aopa: "cefe"
         }
     }
 
 
-    axios.get(`${URL_API}/admin` , token)
+    axios.get(`${URL_API}/admin` , teste1, body)
     .then (response =>{
         console.log(response.data)
     })
