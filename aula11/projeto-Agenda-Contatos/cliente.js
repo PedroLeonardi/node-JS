@@ -1,10 +1,14 @@
 import axios from "axios";
+// import express from "express";
 import chalk from "chalk";
-import { response } from "express";
 import inquirer from "inquirer";
+
+// const app = express();
 
 const URL_API = "http://localhost:3000";
 
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: true }));
 
 async function listarProdutos() {
     try {
@@ -42,26 +46,48 @@ async function deletarContato(id) {
         const respostaDelete = await axios.delete(`${URL_API}/contatos/${id}`) // TEM QU SER DELETE EM FASE DE TESTE
         return respostaDelete.data;
     } catch (err) {
-        console.error('Houve um erro ao deletar um contato',err)
+        console.error('Houve um erro ao deletar um contato', err)
         return [];
     }
 }
 
-async function atualizarContato(id) {
+async function atualizarContato(id, data) {
+    // const nome = "nome"
+    // const rodri = "rodri"
 
-        const teste1 = {
-            body:{
-                nome:'pedro'
-            }
-        }
+    // const teste1 = {
+    //     body: {
+    //         key: "nome",
+    //         value: "rodri"
+    //     }
+    // }
 
-        axios.patch(`${URL_API}/contatos/${id}`, teste1)
-        .then(response =>{
+    axios.patch(`${URL_API}/contatos/${id}`, data)
+        .then(response => {
             console.log(response.data)
         })
-        .catch (err =>{
+        .catch(err => {
             console.error("Houve um erro ao acessar a rota Atualizar", err.message)
-        }) 
+        })
+}
+
+async function entrarAdmin(password) {
+
+    const token = {
+        header: {
+            'Content-Type': 'application/json;charset=UTF-8',
+            'authorization' : password
+        }
+    }
+
+
+    axios.get(`${URL_API}/admin` , token)
+    .then (response =>{
+        console.log(response.data)
+    })
+    .catch (err =>{
+        console.error(err.message)
+    })
 }
 
 
@@ -82,79 +108,102 @@ async function exibirMenu() {
                     { name: chalk.green('Adicionar um novo Contato'), value: "adicionar" },
                     { name: chalk.green('Atualizar um Contato'), value: "atualizar" },
                     { name: chalk.green('Excluir um Contato'), value: "excluir" },
+                    { name: chalk.green('Entrar como Administrador'), value: "admin" },
                     { name: chalk.green('Sair'), value: "sair" },
                 ]
             }
         ]
-        
-        
-        
+
+
+
         try {
             const resposta = await inquirer.prompt(perguntas);
-            
+
             switch (resposta.opcao) {
-                
+
                 case 'listar':
                     const produtos = await listarProdutos();
                     console.log(produtos)
-                    
+
                     break;
-                    case 'detalhes':
-                        
-                        const idResposta = await inquirer.prompt([
-                            { type: 'input', name: 'id', message: 'Digite o ID: ' }
-                        ])
-                        
-                        const detalheProduto = await detalhesProdutos(idResposta.id);
-                        console.log(detalheProduto)
-                        break;
-                        case 'adicionar': //AQUI TEM QUE ARRUMAR !!!!!!!!!
-                        
-                        const novoContato = await inquirer.prompt([
-                            { type: 'input', message: "insira o ID: ", name: 'id' },
-                            { type: 'input', message: 'Insira o Nome: ', name: 'nome' }
-                        ])
-                        
-                        
-                        const dataAdicionarContato = await {
-                    id: novoContato.id,
-                    nome: novoContato.nome
-                }
-                
-                
-                adicionarContato(dataAdicionarContato)
-                
-                break;
-                
+                case 'detalhes':
+
+                    const idResposta = await inquirer.prompt([
+                        { type: 'input', name: 'id', message: 'Digite o ID: ' }
+                    ])
+
+                    const detalheProduto = await detalhesProdutos(idResposta.id);
+                    console.log(detalheProduto)
+                    break;
+                case 'adicionar': //AQUI TEM QUE ARRUMAR !!!!!!!!!
+
+                    const novoContato = await inquirer.prompt([
+                        { type: 'input', message: "insira o ID: ", name: 'id' },
+                        { type: 'input', message: 'Insira o Nome: ', name: 'nome' }
+                    ])
+
+
+                    const dataAdicionarContato = await {
+                        id: novoContato.id,
+                        nome: novoContato.nome
+                    }
+
+
+                    adicionarContato(dataAdicionarContato)
+
+                    break;
+
                 case 'atualizar':
-                    
-                atualizarContato(1)
-                    
+
+                    const atualizarContato2 = await inquirer.prompt([
+                        {type: "input", message: "Qual é o id do item a ser alterado", name: "id"},
+                        {type: 'list', message: 'Qual Campo vc deseja alterar?', choices:['nome','idade'], name:"tipo"},
+                        {type: 'input', message: 'Inisira o novo campo', name:"resposta" }
+
+                    ])
+                    // const ataulizarContato = await inquirer.prompt({
+                    //     {type: 'type', message: 'Qual Campo vc deseja alterar?', choices:['nome','idade'], name:"tipo"},
+                    // })
+                
+                    const data = await {
+                        key:atualizarContato2.tipo,
+                        value:atualizarContato2.resposta
+                    }
+
+                    atualizarContato(atualizarContato2.id, data)
+
                     break;
-                    case 'excluir':
-                const idResposta2 = await inquirer.prompt([
-                    { type: 'input', name: 'id', message: 'Qual Produto vc deseja Excluir: ' }
-                ])
-                
-                const detalheProdutoa = await deletarContato(idResposta2.id);
-                console.log(detalheProdutoa)
+                case 'excluir':
+                    const idResposta2 = await inquirer.prompt([
+                        { type: 'input', name: 'id', message: 'Qual Produto vc deseja Excluir: ' }
+                    ])
+
+                    const detalheProdutoa = await deletarContato(idResposta2.id);
+                    console.log(detalheProdutoa)
+                    break;
+
+                case 'admin':
+
+                    const senha = await inquirer.prompt([
+                        { type: 'input', name: 'senha', message: 'Qual é a senha: ' }
+                    ])
+
+                    entrarAdmin(senha.senha)
                 break;
-                
-                
-                
+
             }
-            
+
         } catch (error) {
             console.error("Houve um erro ao executar o Prompt de Perguntas", error.message)
         }
-        
+
     } catch (error) {
         console.log('Houve um erro ao tentar executar o prompt de perguntas', error.message)
     }
-        
-        
-        
-    }
+
+
+
+}
 
 
 
