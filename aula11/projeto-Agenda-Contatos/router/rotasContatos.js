@@ -44,7 +44,18 @@ function deletarDados(id) {
 }
 
 
+async function atualizarContato(id, newDados){
+    try{
 
+        const AllData = fs.readFileSync('./data/contatos.json', 'utf8');
+        const allDataJson = JSON.parse(AllData);
+        dataAtualizada = allDataJson.find( p => p.id === id)
+        dataAtualizada = newDados
+        fs.writeFileSync('./data/contatos.json', JSON.stringify(dataNonDelete, null, 2))
+    }catch(err){
+        console.error("Houve um erro ao ler e ataulizar o JSON de contatos", err.message)
+    }
+}
 
 
 
@@ -82,7 +93,9 @@ router.post('/envio', (req,res)=>{
 
 
 router.patch('/:id', (req, res)=>{ 
-
+    const id = parseInt(req.params.id)
+    const newData = JSON.stringify(req.body)
+    res.send(`funcionado e o id é ${id}, teste body ${newData}`)
 })
 
 

@@ -1,8 +1,10 @@
 import axios from "axios";
 import chalk from "chalk";
+import { response } from "express";
 import inquirer from "inquirer";
 
 const URL_API = "http://localhost:3000";
+
 
 async function listarProdutos() {
     try {
@@ -44,6 +46,28 @@ async function deletarContato(id) {
         return [];
     }
 }
+
+async function atualizarContato(id) {
+
+        const teste1 = {
+            body:{
+                nome:'pedro'
+            }
+        }
+
+        axios.patch(`${URL_API}/contatos/${id}`, teste1)
+        .then(response =>{
+            console.log(response.data)
+        })
+        .catch (err =>{
+            console.error("Houve um erro ao acessar a rota Atualizar", err.message)
+        }) 
+}
+
+
+
+
+
 
 async function exibirMenu() {
     try {
@@ -104,7 +128,7 @@ async function exibirMenu() {
                 
                 case 'atualizar':
                     
-                    
+                atualizarContato(1)
                     
                     break;
                     case 'excluir':
