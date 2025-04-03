@@ -1,9 +1,8 @@
-import express, { Router } from "express";
+import express from "express";
 import fs from "fs";
-import rotasBase from "./rotasContatos.js"
-import { Console } from "console";
+
 const router = express.Router();
-const app = express();
+
 
 const autenticar = (req, res, next) => {
   const token = req.headers['authorization']
@@ -16,8 +15,25 @@ const autenticar = (req, res, next) => {
   }
 }
 
+function lerContatosID(id) {
+    try {
+        let dataContatos = [];
+        const data = fs.readFileSync('./data/contatos.json', 'utf8');
+        dataContatos = JSON.parse(data);
+        const idBase = dataContatos.find(p => p.id === id)
+        
+        if (idBase && idBase['id'] === id){
+            return true
+        } else {
+            return false
+        }
+    } catch (erro) {
+        console.error('Houve um erro ao ler o JSON de contatos', erro);
+        return dataContatos = []
+    };
+}
 
-function salvarDados(dados) {
+function salvarContatos(dados) {
     try {
         let dataJson = []
         const data = fs.readFileSync('./data/contatos.json', 'utf8');
@@ -30,7 +46,7 @@ function salvarDados(dados) {
     }
 }
 
-function deletarDados(id) {
+function deletarContatos(id) {
 
     try{
         let dataNonDelete = [];
@@ -70,10 +86,15 @@ router.post('/envio', autenticar,(req,res)=>{
     const novoItem = req.body
     console.log("Produto enviado com Sucesso", novoItem);
     try {
-        salvarDados(novoItem)
-        res.status(200).send("Produto enviado com Sucesso")
+        const status = lerContatosID(req.body.id)
+        if (status === true){ // TRUE == EXISTE UM CONTATO COM ESSE ID
+            res.status(200).send("Já existe um item com esse ID")
+        } else {
+            salvarContatos(novoItem)
+            res.status(200).send("Produto enviado com Sucesso")
+        }
     } catch (error) {
-        res.status(400).send("Houve um erro ao efetuar o salvamento", error.message) //OU É 400 OU 500
+        res.status(400).send("Houve um erro ao efetuar o salvamento") //OU É 400 OU 500
         
     }
 })
@@ -87,7 +108,12 @@ router.patch('/:id', autenticar,(req, res)=>{
         const key = newDataJSON.key
         const value = newDataJSON.value
         console.log(newData)
-        atualizarContato(id, key, value);
+        if (lerContatosID(id) === true){
+            atualizarContato(id, key, value);
+            res.status(200).send("Produto Atualizado com sucesso")
+        } else {
+            res.status(401).send("Não existe um contato com esse id")
+        }
     } catch (err) {
         console.error('erro ao tentar executar a ação', err)
     }
@@ -99,7 +125,7 @@ router.delete('/:id', autenticar,(req,res)=>{ /////TEM QUE SER DELETE SOMENTE TE
     const id = parseInt(req.params.id)
 
     
-        deletarDados(id);
+        deletarContatos(id);
         res.status(200).send(`deletado com sucesso`)
 
 })

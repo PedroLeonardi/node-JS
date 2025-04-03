@@ -1,6 +1,7 @@
 import axios from "axios";
 // import express from "express";
 import chalk from "chalk";
+import { response } from "express";
 import inquirer from "inquirer";
 
 // const app = express();
@@ -77,7 +78,8 @@ async function atualizarContato(id, data, password) {
             console.log(response.data) 
         })
         .catch(err => {
-            console.error("Houve um erro ao acessar a rota Atualizar", err.message)
+            
+            console.error(err.response.data)
         })
 }
 
@@ -207,7 +209,7 @@ case 'adicionar': //AQUI TEM QUE ARRUMAR !!!!!!!!!
 
 
                     adicionarContato(dataAdicionarContato, senha.senha)
-                    await timeout(2000)
+                    await timeout(1000)
                     menuAdmin()
                     break;
 
@@ -229,6 +231,7 @@ case 'adicionar': //AQUI TEM QUE ARRUMAR !!!!!!!!!
                     }
 
                     atualizarContato(atualizarContato2.id, data , senha.senha)
+                    await timeout(1000)
                     menuAdmin();
                     break;
                 case 'excluir':
