@@ -3,12 +3,11 @@ CREATE DATABASE p_loja;
 USE p_loja;
 
 CREATE TABLE cliente (
-	id INT primary key, 
+	id INT primary key auto_increment UNIQUE, 
     nome VARCHAR(50),
     email VARCHAR(50),
     endereco VARCHAR(50)
 );
-
 
 CREATE TABLE produtos (
 	id INT primary key,
@@ -32,10 +31,10 @@ CREATE TABLE itens_pedido (
     preco_unitario DECIMAL(10,2)
 );
 
-INSERT INTO cliente (id, nome, email, endereco)
-values (1, 'pedro', 'pedro@email', 'rua dos canarios'),
-('2', 'davi', 'davi@email', 'rua das anadorinhas'),
-('3', 'ramon', 'ramon@email', 'rua dos pombos');
+INSERT INTO cliente (nome, email, endereco)
+values ('pedro', 'pedro@email', 'rua dos canarios'),
+( 'davi', 'davi@email', 'rua das anadorinhas'),
+('ramon', 'ramon@email', 'rua dos pombos');
 
 
 INSERT INTO pedidos (id, id_cliente, periodo, total)
@@ -53,7 +52,7 @@ VALUE (10, 100, 5, 0.70),
 (20, 200, 10, 5.00),
 (30, 200, 1, 20.00);
 
-select *from itens_pedido;
+select *from cliente;
 
 
 
