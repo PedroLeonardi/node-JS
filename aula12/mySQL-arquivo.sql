@@ -10,23 +10,23 @@ CREATE TABLE cliente (
 );
 
 CREATE TABLE produtos (
-	id INT primary key,
+	id INT primary key AUTO_INCREMENT,
     nome VARCHAR(50),
     descricao VARCHAR(50),
     preco DECIMAL(10,2)
 );
 
 CREATE TABLE pedidos (
-	id INT primary key,
-    id_cliente INT,
+	id INT primary key AUTO_INCREMENT,
+    id_cliente INT ,
 	periodo DATE,
     total DECIMAL (10,2)
 );
 
 
 CREATE TABLE itens_pedido (
-	id_pedidos INT, 
-    id_produto INT,
+	id_pedidos INT , 
+    id_produto INT ,
     quantidade INT,
     preco_unitario DECIMAL(10,2)
 );
