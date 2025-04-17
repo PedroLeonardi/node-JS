@@ -83,11 +83,7 @@ async function atualizarContato(id, key, value) {
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
-router.get("/", autenticar, (req, res) => {
 
-    res.status(200).send(true)
-
-})
 
 
 router.post('/envio', autenticar, (req, res) => {

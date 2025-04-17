@@ -1,7 +1,6 @@
 import express from "express";
 const app = express();
 const port = 3000;
-import db from "./db.js"
 import rotaCliente from "./router/rotasCliente.js"
 import rotaProdutos from "./router/rotasProdutos.js"
 
