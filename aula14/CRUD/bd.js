@@ -28,7 +28,7 @@ async function readAll (table, where = null){
         console.error('Erro ao ler o registros: ', err)
         throw err;
     } finally {
-        connection.release
+        connection.release();
     }
 }
 
@@ -47,7 +47,7 @@ async function read(table, where) {
         console.error('Erro ao ler o registros: ', err)
         throw err;
     } finally {
-        connection.release
+        connection.release()
     
     }
 }
@@ -61,7 +61,7 @@ async function create(table, data) {
         //(nome, email, endereco)
         const placeholders = Array(Object.keys(data).length).fill('?').join(', ') // aqui eu conto quantas keys são prencidas com "?" e juntar com ", " 
         //VALUES (?, ?, ?)
-        const sql = `INSERT INTO ${table} (${columns} VALUE (${placeholders}))`;
+        const sql = `INSERT INTO ${table} (${columns}) VALUES (${placeholders})`;
         // INSERT INTO clintes (nome, email, endereco) VALUES (?, ?, ?)
         const values = Object.values(data)
         const [result] = await connection.execute(sql, values)
@@ -100,9 +100,9 @@ async function deleteRecord(table, where, ) {
     try{
         const sql = `DELETE FROM ${table} WHERE ${where}`
         const [result] = await connetion.execute(sql);
-        return result.affectedRows
+        return result.affectedRows;
     }catch (err) {
-        console.error("Erro ao ataulizar registros: ", err)
+        console.error("Erro ao ataulizar registros: ", err);
         throw err;
     } finally {
         connetion.release();
